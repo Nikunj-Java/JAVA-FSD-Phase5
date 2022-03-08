@@ -1,0 +1,20 @@
+**************Format and mount an ebs volume************
+
+---->lsblk
+	////to check if the volume has any data
+---->sudo file -s /dev/xvdf   
+	///// format the vomlume
+---->sudo mkfs -t ext4 /dev/xvdf
+	////to create directory
+---->sudo mkdir /newvolume
+	////mount volume
+---->sudo mount /dev/xvdf /newvolume
+	////check disk space 
+---->cd /newvolume
+---->df -h
+******to unmount the volume******
+
+----->cd 
+----->sudo umount /dev/xvdf
+
+
