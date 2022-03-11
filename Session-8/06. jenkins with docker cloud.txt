@@ -86,3 +86,44 @@ step-4: install jenkins
 
 	*****to get secreat adminpassword*****
 	>sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+*****part 2*******
+
+	 
+	*****after generating the key enter the follow command for permission 
+	> sudo chmod 777 /var/run/docker.sock
+
+
+	********03/11/2022*******************************************************
+
+Step5: download DOCKER PLUGIN in jenkins(goto>manage jenkins>plugin>search for docker plugin>install without restart)
+
+Step6 : goto>managejenkins>managenodes and clouds>configure clouds>Docker
+
+	name: docker
+	Host URI: unix:///var/run/docker.sock
+
+step7: click on test connection
+	if error percist run the command again: chmod 777 /var/run/docker.sock
+
+
+step8: new item> name of project> freestyle project> goto build>
+	SOURCE MANAGEMENT: 
+		REPOSITORY URL : https://github.com/Nikunj-Java/docker_master.git
+	BUIL TRIGGERS:		
+		POLL HCM:  H/2 * * * *
+	ADD BUILD STEP:
+		CHOOSE :BUILD / PUBLISH DOCKER IMAGE
+		DIRECTORY OF DOCKER FILE:
+		CLOUD: DOCKER
+		IMAGE:USERNAME/REPOSITORYNAME:${BUILD_NUMBER}
+
+				(NOTE: prepare one new public repository in dockerhub)
+				EG: nikunj0510/jenkinsdemo:${BUILD_NUMBER}
+		ADD REGISTRY CREANTIAL:
+					USERNAME & PASSWORD OF DOCKER
+		CHEKBOX PUSH IMAGE: CLICK
+		clean images: CLICK
+		Attempt to remove images when jenkins deletes the run: CLICK
+	SAVE IT
+	GO TO > DASHBOARD> BUILD THE PROJECT
